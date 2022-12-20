@@ -1,4 +1,4 @@
-package com.example.melobit.ui
+package com.example.melobit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
