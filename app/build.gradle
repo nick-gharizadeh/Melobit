@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -45,9 +46,8 @@ dependencies {
     def fragment_version = "1.4.1"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     //hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
-    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-compiler:2.44.2'
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
@@ -68,4 +68,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+}
+
+kapt {
+    correctErrorTypes true
 }
