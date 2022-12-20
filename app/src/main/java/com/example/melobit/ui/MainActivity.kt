@@ -5,7 +5,11 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.melobit.R
 import com.example.melobit.databinding.ActivityMainBinding
+import com.example.melobit.ui.homefragment.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -13,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val homeFragment=HomeFragment()
+        val homeFragment= HomeFragment()
         val searchFragment=SearchFragment()
 
 
