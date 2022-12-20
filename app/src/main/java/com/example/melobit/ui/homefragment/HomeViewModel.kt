@@ -19,11 +19,12 @@ class HomeViewModel @Inject constructor(private val songRepository: SongReposito
     init {
         getNewSongs()
     }
+
     fun getNewSongs() {
         viewModelScope.launch {
             val response = songRepository.getNewSongs()
             if (response.errorMessage == null)
-                newSongsLiveData.postValue(response.data)
+                newSongsLiveData.postValue(response.data?.results)
         }
     }
 }

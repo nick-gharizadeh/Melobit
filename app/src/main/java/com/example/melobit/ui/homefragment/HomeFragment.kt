@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner){
 
-                Toast.makeText(requireContext(), "null ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it?.size.toString(), Toast.LENGTH_SHORT).show()
 
 
 
