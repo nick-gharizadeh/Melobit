@@ -9,6 +9,7 @@ data class Song(
     val duration: Int,
     val hasVideo: Boolean,
     val id: String,
+    val image: ImageXXX,
     val localized: Boolean,
     val releaseDate: String,
     val title: String
