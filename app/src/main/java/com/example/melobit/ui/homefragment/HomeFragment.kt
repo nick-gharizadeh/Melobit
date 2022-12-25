@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.melobit.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
+    private var timer: Timer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +32,22 @@ class HomeFragment : Fragment() {
             adapter.submitList(it)
         }
         homeViewModel.slidersLiveData.observe(viewLifecycleOwner) {
+
             if (it != null) {
                 val mViewPagerAdapter =
                     MainViewPagerAdapter(requireContext(), it)
                 binding.mainViewPager.adapter = mViewPagerAdapter
+
+                val timerTask: TimerTask = object : TimerTask() {
+                    override fun run() {
+                        binding.mainViewPager.post {
+                            binding.mainViewPager.currentItem =
+                                (binding.mainViewPager.currentItem + 1) % it.size
+                        }
+                    }
+                }
+                timer = Timer()
+                timer!!.schedule(timerTask, 5000, 5000)
             }
         }
     }
