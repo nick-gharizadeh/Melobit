@@ -44,8 +44,8 @@ class MainViewPagerAdapter(var context: Context, private var songsList: List<Son
         textViewSongName.text = song.title
         Glide.with(itemView)
             .load(song.image.slider?.url.toString())
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
             .into(imageView)
         Objects.requireNonNull(container).addView(itemView)
         return itemView
