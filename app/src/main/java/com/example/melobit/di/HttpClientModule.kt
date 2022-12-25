@@ -19,9 +19,6 @@ object HttpClientModule {
     fun getOkHttpClient(): OkHttpClient {
         val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
         return OkHttpClient.Builder()
-            .readTimeout(25, TimeUnit.SECONDS)
-            .writeTimeout(25, TimeUnit.SECONDS)
-            .connectTimeout(25, TimeUnit.SECONDS)
             .addInterceptor(logger)
             .build()
 

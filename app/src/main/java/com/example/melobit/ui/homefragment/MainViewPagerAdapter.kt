@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.melobit.R
 import com.example.melobit.data.model.song.Song
-import com.squareup.picasso.Picasso
 import java.util.*
-
 
 
 class MainViewPagerAdapter(var context: Context, private var songsList: List<Song>) :
@@ -26,22 +28,30 @@ class MainViewPagerAdapter(var context: Context, private var songsList: List<Son
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object` as LinearLayout
+        return view === `object` as ConstraintLayout
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val itemView: View = mLayoutInflater.inflate(R.layout.main_view_pager_item, container, false)
+        val itemView: View =
+            mLayoutInflater.inflate(R.layout.main_view_pager_item, container, false)
         val imageView: ImageView = itemView.findViewById(R.id.imageView_main_viewPager) as ImageView
+        val textViewSongName: TextView =
+            itemView.findViewById(R.id.textView_main_view_pager_song_name) as TextView
+        val textViewSongArtist: TextView =
+            itemView.findViewById(R.id.textView_main_view_pager_song_artist) as TextView
+        val song = songsList[position]
+        textViewSongArtist.text = song.artists[0].fullName
+        textViewSongName.text = song.title
         Glide.with(itemView)
-            .load(songsList[position].image.slider?.url.toString())
-            .placeholder(R.drawable.place_holder)
+            .load(song.image.slider?.url.toString())
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(imageView)
-        Toast.makeText(context,songsList[position].image.slider?.url.toString() , Toast.LENGTH_SHORT).show()
         Objects.requireNonNull(container).addView(itemView)
         return itemView
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as LinearLayout)
+        container.removeView(`object` as ConstraintLayout)
     }
 }

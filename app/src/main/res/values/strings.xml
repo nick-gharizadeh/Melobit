@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_songs">New Songs</string>
     <string name="see_all">See all</string>
+    <string name="featured_text">Featured</string>
 </resources>
