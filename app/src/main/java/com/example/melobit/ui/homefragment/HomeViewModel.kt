@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.data.repository.SongRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,16 +23,16 @@ class HomeViewModel @Inject constructor(private val songRepository: SongReposito
         getSliders()
     }
 
-    fun getNewSongs() {
-        viewModelScope.launch {
+    private fun getNewSongs() {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getNewSongs()
             if (response.errorMessage == null)
                 newSongsLiveData.postValue(response.data?.results)
         }
     }
 
-    fun getSliders() {
-        viewModelScope.launch {
+    private fun getSliders() {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getSliders()
             if (response.errorMessage == null)
                 slidersLiveData.postValue(response.data?.results)
