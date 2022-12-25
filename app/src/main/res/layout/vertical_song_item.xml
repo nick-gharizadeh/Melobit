@@ -10,7 +10,7 @@
 
         <variable
             name="song"
-            type="com.example.melobit.data.model.Song" />
+            type="com.example.melobit.data.model.song.Song" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

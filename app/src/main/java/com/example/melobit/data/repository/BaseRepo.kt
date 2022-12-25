@@ -1,8 +1,8 @@
 package com.example.melobit.data.repository
 
 
-import com.example.melobit.data.model.ErrorResponse
-import com.example.melobit.data.model.Resource
+import com.example.melobit.data.model.song.ErrorResponse
+import com.example.melobit.data.model.song.Resource
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

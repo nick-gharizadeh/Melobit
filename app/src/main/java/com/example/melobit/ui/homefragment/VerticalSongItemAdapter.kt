@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.melobit.R
-import com.example.melobit.data.model.Song
+import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.VerticalSongItemBinding
 
 

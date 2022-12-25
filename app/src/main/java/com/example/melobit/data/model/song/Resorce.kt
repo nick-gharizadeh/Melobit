@@ -1,4 +1,4 @@
-package com.example.melobit.data.model
+package com.example.melobit.data.model.song
 
 
 sealed class Resource<T>(

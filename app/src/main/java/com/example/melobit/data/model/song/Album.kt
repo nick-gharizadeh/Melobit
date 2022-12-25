@@ -1,4 +1,4 @@
-package com.example.melobit.data.model
+package com.example.melobit.data.model.song
 
 data class Album(
     val artists: List<Artist>,
