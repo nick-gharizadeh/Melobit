@@ -3,7 +3,7 @@ package com.example.melobit.ui.homefragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.melobit.data.model.Song
+import com.example.melobit.data.model.song.Song
 import com.example.melobit.data.repository.SongRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,9 +15,11 @@ class HomeViewModel @Inject constructor(private val songRepository: SongReposito
     ViewModel() {
 
     val newSongsLiveData = MutableLiveData<List<Song>?>()
+    val slidersLiveData = MutableLiveData<List<Song>?>()
 
     init {
         getNewSongs()
+        getSliders()
     }
 
     fun getNewSongs() {
@@ -27,4 +29,14 @@ class HomeViewModel @Inject constructor(private val songRepository: SongReposito
                 newSongsLiveData.postValue(response.data?.results)
         }
     }
+
+    fun getSliders() {
+        viewModelScope.launch {
+            val response = songRepository.getSliders()
+            if (response.errorMessage == null)
+                slidersLiveData.postValue(response.data?.results)
+        }
+    }
+
+
 }
