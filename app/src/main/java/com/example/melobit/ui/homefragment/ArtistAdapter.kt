@@ -34,7 +34,7 @@ class ArtistAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         private val imageViewCover: ImageView = itemView.findViewById(R.id.imageView_artist_cover)
         fun bind(artist: ArtistX) {
-            if (artist.image.cover.url.isNotEmpty()) {
+            if (artist.image?.cover?.url?.isNotEmpty() == true) {
                 Glide.with(itemView)
                     .load(artist.image.cover.url)
                     .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))

@@ -40,10 +40,10 @@ class MainViewPagerAdapter(var context: Context, private var songsList: List<Son
         val textViewSongArtist: TextView =
             itemView.findViewById(R.id.textView_main_view_pager_song_artist) as TextView
         val song = songsList[position]
-        textViewSongArtist.text = song.artists[0].fullName
+        textViewSongArtist.text = song.artists?.get(0)?.fullName ?: ""
         textViewSongName.text = song.title
         Glide.with(itemView)
-            .load(song.image.slider?.url.toString())
+            .load(song.image?.slider?.url.toString())
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .apply(RequestOptions.bitmapTransform(RoundedCorners(120)))
             .into(imageView)

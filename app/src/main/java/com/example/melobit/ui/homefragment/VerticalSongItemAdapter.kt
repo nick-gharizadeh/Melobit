@@ -33,7 +33,7 @@ class VerticalSongItemAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         private val imageViewCover: ImageView = itemView.findViewById(R.id.imageView_song_cover_vertical)
         fun bind(song: Song) {
-            if (song.image.cover.url.isNotEmpty()) {
+            if (song.image?.cover?.url?.isNotEmpty() == true) {
                 Glide.with(itemView)
                     .load(song.image.cover.url)
                     .apply(RequestOptions.bitmapTransform( RoundedCorners(30)))
