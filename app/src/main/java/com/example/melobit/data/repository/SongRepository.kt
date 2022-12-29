@@ -16,4 +16,11 @@ class SongRepository @Inject constructor(private val songApiService: MelobitApiS
         return safeApiCall { songApiService.getSliders() }
     }
 
+    suspend fun getTopTenDaySongs(): Resource<SongResponse> {
+        return safeApiCall { songApiService.getTopTenDaySongs() }
+    }
+
+    suspend fun getTopTenWeekSongs(): Resource<SongResponse> {
+        return safeApiCall { songApiService.getTopTenWeekSongs() }
+    }
 }

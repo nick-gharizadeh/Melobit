@@ -17,8 +17,8 @@ interface MelobitApiService {
     suspend fun getTrendingArtists(): Response<ArtistResponse>
 
     @GET("song/top/day/0/100")
-    suspend fun getTopTenDay(): Response<SongResponse>
+    suspend fun getTopTenDaySongs(): Response<SongResponse>
 
     @GET("song/top/week/0/100")
-    suspend fun getTopTenWeek(): Response<SongResponse>
+    suspend fun getTopTenWeekSongs(): Response<SongResponse>
 }
