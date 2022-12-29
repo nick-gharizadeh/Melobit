@@ -27,9 +27,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = VerticalSongItemAdapter()
+        val adapterTrendingArtist = ArtistAdapter()
         binding.newSongsRecyclerView.adapter = adapter
+        binding.trendingArtistsRecyclerView.adapter = adapterTrendingArtist
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+        homeViewModel.trendingArtistsLiveData.observe(viewLifecycleOwner) {
+            adapterTrendingArtist.submitList(it)
         }
         homeViewModel.slidersLiveData.observe(viewLifecycleOwner) {
 
@@ -37,17 +42,17 @@ class HomeFragment : Fragment() {
                 val mViewPagerAdapter =
                     MainViewPagerAdapter(requireContext(), it)
                 binding.mainViewPager.adapter = mViewPagerAdapter
-
-                val timerTask: TimerTask = object : TimerTask() {
-                    override fun run() {
-                        binding.mainViewPager.post {
-                            binding.mainViewPager.currentItem =
-                                (binding.mainViewPager.currentItem + 1) % it.size
-                        }
-                    }
-                }
-                timer = Timer()
-                timer!!.schedule(timerTask, 5000, 5000)
+//
+//                val timerTask: TimerTask = object : TimerTask() {
+//                    override fun run() {
+//                        binding.mainViewPager.post {
+//                            binding.mainViewPager.currentItem =
+//                                (binding.mainViewPager.currentItem + 1) % it.size
+//                        }
+//                    }
+//                }
+//                timer = Timer()
+//                timer!!.schedule(timerTask, 5000, 5000)
             }
         }
     }
