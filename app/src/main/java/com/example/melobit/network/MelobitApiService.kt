@@ -15,4 +15,10 @@ interface MelobitApiService {
 
     @GET("artist/trending/0/4")
     suspend fun getTrendingArtists(): Response<ArtistResponse>
+
+    @GET("song/top/day/0/100")
+    suspend fun getTopTenDay(): Response<SongResponse>
+
+    @GET("song/top/week/0/100")
+    suspend fun getTopTenWeek(): Response<SongResponse>
 }
