@@ -21,12 +21,16 @@ class HomeViewModel @Inject constructor(
     ViewModel() {
 
     val newSongsLiveData = MutableLiveData<List<Song>?>()
+    val topTenDayLiveData = MutableLiveData<List<Song>?>()
+    val topTenWeekLiveData = MutableLiveData<List<Song>?>()
     val trendingArtistsLiveData = MutableLiveData<List<ArtistX>?>()
     val slidersLiveData = MutableLiveData<List<Song>?>()
 
     init {
         getNewSongs()
         getSliders()
+        getTopTenDay()
+        getTopTenWeek()
         getTrendingArtists()
     }
 
@@ -43,6 +47,22 @@ class HomeViewModel @Inject constructor(
             val response = songRepository.getSliders()
             if (response.errorMessage == null)
                 slidersLiveData.postValue(response.data?.results)
+        }
+    }
+
+    private fun getTopTenDay() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = songRepository.getTopTenDaySongs()
+            if (response.errorMessage == null)
+                topTenDayLiveData.postValue(response.data?.results)
+        }
+    }
+
+    private fun getTopTenWeek() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = songRepository.getTopTenWeekSongs()
+            if (response.errorMessage == null)
+                topTenWeekLiveData.postValue(response.data?.results)
         }
     }
 
