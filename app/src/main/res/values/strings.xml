@@ -6,4 +6,6 @@
     <string name="see_all">See all</string>
     <string name="featured_text">Featured</string>
     <string name="trending_artists">Trending Artists</string>
+    <string name="top_10_day">Top 10 Day</string>
+    <string name="top_10_week">Top 10 Week</string>
 </resources>
