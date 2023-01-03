@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -27,9 +28,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = VerticalSongItemAdapter()
-        val adapterTopTenDaySongs = VerticalSongItemAdapter()
-        val adapterTopTenWeekSongs = VerticalSongItemAdapter()
+        val adapter = VerticalSongItemAdapter{goToPlaySongFragment(it)}
+        val adapterTopTenDaySongs = VerticalSongItemAdapter{goToPlaySongFragment(it)}
+        val adapterTopTenWeekSongs = VerticalSongItemAdapter{goToPlaySongFragment(it)}
         val adapterTrendingArtist = ArtistAdapter()
         binding.newSongsRecyclerView.adapter = adapter
         binding.topTenDayRecyclerView.adapter = adapterTopTenDaySongs
@@ -73,4 +74,9 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun goToPlaySongFragment(song:Song){
+
+    }
+
 }

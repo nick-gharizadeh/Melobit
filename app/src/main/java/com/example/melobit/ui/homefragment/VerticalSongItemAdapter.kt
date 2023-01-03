@@ -15,8 +15,9 @@ import com.example.melobit.R
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.VerticalSongItemBinding
 
+typealias ClickHandlerSong = (Song) -> Unit
 
-class VerticalSongItemAdapter() :
+class VerticalSongItemAdapter(private var clickHandlerSong: ClickHandlerSong) :
     ListAdapter<Song, VerticalSongItemAdapter.ItemHolder>(SongDiffCallback) {
 
     object SongDiffCallback : DiffUtil.ItemCallback<Song>() {
