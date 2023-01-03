@@ -81,12 +81,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun goToPlaySongFragment(song: Song) {
-
-        val dialogFragment = PlaySongFragment()
+        val dialogFragment = PlaySongFragment(song)
         activity?.let {
             dialogFragment.show(it.supportFragmentManager, "My  Fragment")
-//            val action = HomeFragmentDirections.actionHomeFragmentToPlaySongFragment(song)
-//            findNavController().navigate(action)
         }
     }
 }
