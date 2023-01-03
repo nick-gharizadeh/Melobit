@@ -9,10 +9,23 @@
         android:id="@+id/homeFragment"
         android:name="com.example.melobit.ui.homefragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.melobit.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/playSongFragment"
+        android:name="com.example.melobit.ui.playsongfragment.PlaySongFragment"
+        android:label="fragment_play_song"
+        tools:layout="@layout/fragment_play_song" >
+        <argument
+            android:name="song"
+            app:argType="com.example.melobit.data.model.song.Song" />
+    </fragment>
 </navigation>

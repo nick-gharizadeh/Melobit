@@ -1,5 +1,7 @@
 package com.example.melobit.data.model.song
 
+import java.io.Serializable
+
 data class Song(
     val album: Album?,
     val artists: List<ArtistX?>?,
@@ -10,4 +12,4 @@ data class Song(
     val image: ImageXXX?,
     val releaseDate: String?,
     val title: String?
-)
+) : Serializable

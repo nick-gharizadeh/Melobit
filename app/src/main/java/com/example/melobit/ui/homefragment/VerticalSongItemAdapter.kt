@@ -30,14 +30,17 @@ class VerticalSongItemAdapter(private var clickHandlerSong: ClickHandlerSong) :
             return oldItem.id == newItem.id
         }
     }
+
     class ItemHolder(val binding: VerticalSongItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val imageViewCover: ImageView = itemView.findViewById(R.id.imageView_song_cover_vertical)
+        private val imageViewCover: ImageView =
+            itemView.findViewById(R.id.imageView_song_cover_vertical)
+
         fun bind(song: Song) {
             if (song.image?.cover?.url?.isNotEmpty() == true) {
                 Glide.with(itemView)
                     .load(song.image.cover.url)
-                    .apply(RequestOptions.bitmapTransform( RoundedCorners(30)))
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(imageViewCover)
             }
@@ -58,6 +61,9 @@ class VerticalSongItemAdapter(private var clickHandlerSong: ClickHandlerSong) :
         val song = getItem(position)
         holder.binding.song = song
         holder.bind(song)
+        holder.binding.constraintLayout.setOnClickListener {
+            clickHandlerSong.invoke(song)
+        }
 
     }
 }
