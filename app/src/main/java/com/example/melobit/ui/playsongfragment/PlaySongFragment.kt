@@ -24,7 +24,7 @@ class PlaySongFragment(var song: Song) : DialogFragment() {
         super.onResume()
         val params: ViewGroup.LayoutParams = dialog!!.window!!.attributes
         params.width = WindowManager.LayoutParams.MATCH_PARENT
-        params.height = WindowManager.LayoutParams.MATCH_PARENT
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT
         dialog!!.window!!.attributes = params as WindowManager.LayoutParams
     }
 
@@ -41,12 +41,24 @@ class PlaySongFragment(var song: Song) : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.textViewPlaySongArtist.text = song.artists?.get(0)?.fullName
         binding.textViewPlaySongTitle.text = song.title
-        binding.seekBar.max = song.duration!!
         Glide.with(requireContext())
             .load(song.image?.cover?.url)
             .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(binding.imageViewPlaySongCover)
         song.audio?.medium?.url?.let { playSongViewModel.playMusic(it) }
+
+        binding.imageViewPause.setOnClickListener {
+            it.visibility = View.INVISIBLE
+            binding.imageViewPlay.visibility = View.VISIBLE
+            playSongViewModel.pausePlaying()
+        }
+
+        binding.imageViewPlay.setOnClickListener {
+            it.visibility = View.INVISIBLE
+            binding.imageViewPause.visibility = View.VISIBLE
+            playSongViewModel.startPlaying()
+
+        }
     }
 }

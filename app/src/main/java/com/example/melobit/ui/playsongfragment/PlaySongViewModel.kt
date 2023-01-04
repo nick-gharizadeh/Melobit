@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class PlaySongViewModel : ViewModel() {
     var mMediaPlayer: MediaPlayer = MediaPlayer()
     var isPaused = false
+    var timeThatPaused = 0
 
     fun playMusic(url: String) {
         makeMediaPlayerReadyForPlaying(url)
@@ -36,6 +37,23 @@ class PlaySongViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun pausePlaying() {
+        mMediaPlayer.pause()
+        isPaused = true
+        timeThatPaused = mMediaPlayer.currentPosition
+    }
+
+    fun startPlaying(): Boolean {
+        if (isPaused) {
+            mMediaPlayer.seekTo(timeThatPaused)
+            mMediaPlayer.start()
+            return true
+        }
+        return false
+    }
+
 
 
     fun stopPlaying() {
