@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -16,6 +17,7 @@ import com.example.melobit.databinding.FragmentPlaySongBinding
 
 class PlaySongFragment(var song: Song) : DialogFragment() {
     private lateinit var binding: FragmentPlaySongBinding
+    val playSongViewModel: PlaySongViewModel by viewModels()
 
 
     override fun onResume() {
@@ -45,5 +47,6 @@ class PlaySongFragment(var song: Song) : DialogFragment() {
             .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(binding.imageViewPlaySongCover)
+        song.audio?.medium?.url?.let { playSongViewModel.playMusic(it) }
     }
 }
