@@ -3,6 +3,9 @@ package com.example.melobit.ui.playsongfragment
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class PlaySongViewModel : ViewModel() {
@@ -15,20 +18,22 @@ class PlaySongViewModel : ViewModel() {
 
 
     fun makeMediaPlayerReadyForPlaying(url: String) {
-        if (mMediaPlayer.isPlaying or isPaused) {
-            stopPlaying()
-        }
-        try {
-            mMediaPlayer.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-            )
-            mMediaPlayer.setDataSource(url)
-            mMediaPlayer.prepare()
-            mMediaPlayer.start()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (mMediaPlayer.isPlaying or isPaused) {
+                stopPlaying()
+            }
+            try {
+                mMediaPlayer.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
+                )
+                mMediaPlayer.setDataSource(url)
+                mMediaPlayer.prepare()
+                mMediaPlayer.start()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -39,4 +44,8 @@ class PlaySongViewModel : ViewModel() {
         mMediaPlayer.reset()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        stopPlaying()
+    }
 }
