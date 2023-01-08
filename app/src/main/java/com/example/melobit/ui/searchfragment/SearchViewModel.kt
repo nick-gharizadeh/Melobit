@@ -16,9 +16,7 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    init {
-        searchSongs("masood saeedi")
-    }
+
 
     val searchLiveData = MutableLiveData<List<Song>>()
 
