@@ -50,11 +50,6 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.topTenDayLiveData.observe(viewLifecycleOwner) {
             adapterTopTenDaySongs.submitList(it)
-            if (it != null)
-                Toast.makeText(requireContext(), it[0].id, Toast.LENGTH_LONG).show()
-            else
-                Toast.makeText(requireContext(), "null", Toast.LENGTH_LONG).show()
-
         }
         homeViewModel.topTenWeekLiveData.observe(viewLifecycleOwner) {
             adapterTopTenWeekSongs.submitList(it)

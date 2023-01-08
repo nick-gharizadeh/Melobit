@@ -10,7 +10,7 @@
 
         <variable
             name="song"
-            type="com.example.melobit.data.model.search.Song" />
+            type="com.example.melobit.data.model.song.Song" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imageView_song_cover_vertical"
+            android:id="@+id/imageView_song_cover_horizontal"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
@@ -40,15 +40,15 @@
             android:text="@{song.title}"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView_song_cover_vertical"
-            app:layout_constraintTop_toTopOf="@+id/imageView_song_cover_vertical" />
+            app:layout_constraintStart_toEndOf="@+id/imageView_song_cover_horizontal"
+            app:layout_constraintTop_toTopOf="@+id/imageView_song_cover_horizontal" />
 
         <TextView
             android:id="@+id/textView_song_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{song.artists[0].fullName}"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_song_cover_vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_song_cover_horizontal"
             app:layout_constraintStart_toStartOf="@+id/textView_song_title"
             app:layout_constraintTop_toBottomOf="@+id/textView_song_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
