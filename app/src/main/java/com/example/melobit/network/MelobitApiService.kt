@@ -1,9 +1,11 @@
 package com.example.melobit.network
 
 import com.example.melobit.data.model.artist.ArtistResponse
+import com.example.melobit.data.model.search.SearchResponse
 import com.example.melobit.data.model.song.SongResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface MelobitApiService {
 
@@ -21,4 +23,7 @@ interface MelobitApiService {
 
     @GET("song/top/week/0/100")
     suspend fun getTopTenWeekSongs(): Response<SongResponse>
+
+    @GET("search/query/{query}/0/50")
+    fun search(@Path("query") query: String?): Response<SearchResponse?>?
 }

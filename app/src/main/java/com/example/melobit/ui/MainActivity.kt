@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.melobit.R
 import com.example.melobit.databinding.ActivityMainBinding
 import com.example.melobit.ui.homefragment.HomeFragment
+import com.example.melobit.ui.searchfragment.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide();
 
         val homeFragment= HomeFragment()
-        val searchFragment=SearchFragment()
+        val searchFragment= SearchFragment()
 
 
         setCurrentFragment(homeFragment)
