@@ -25,5 +25,5 @@ interface MelobitApiService {
     suspend fun getTopTenWeekSongs(): Response<SongResponse>
 
     @GET("search/query/{query}/0/50")
-    fun search(@Path("query") query: String?): Response<SearchResponse?>?
+    fun search(@Path("query") query: String): Response<SearchResponse>
 }
