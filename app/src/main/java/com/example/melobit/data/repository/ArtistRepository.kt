@@ -2,7 +2,6 @@ package com.example.melobit.data.repository
 
 import com.example.melobit.data.model.artist.ArtistResponse
 import com.example.melobit.data.model.song.Resource
-import com.example.melobit.data.model.song.SongResponse
 import com.example.melobit.network.MelobitApiService
 import javax.inject.Inject
 
