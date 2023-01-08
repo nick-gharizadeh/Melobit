@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.melobit.databinding.FragmentSearchBinding
@@ -31,13 +30,9 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = HorizontalSongItemAdapter()
+        binding.searchRecyclerView.adapter = adapter
         searchViewModel.searchLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            binding.searchRecyclerView.adapter = adapter
-            if (it != null)
-                Toast.makeText(requireContext(), it[0].title, Toast.LENGTH_LONG).show()
-            else
-                Toast.makeText(requireContext(), "null", Toast.LENGTH_SHORT).show()
 
         }
 
