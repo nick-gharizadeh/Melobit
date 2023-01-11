@@ -3,8 +3,9 @@ package com.example.melobit.ui.homefragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.melobit.data.model.song.ArtistX
-import com.example.melobit.data.model.song.Song
+import com.example.melobit.data.model.artist.ArtistResponse
+import com.example.melobit.data.model.song.Resource
+import com.example.melobit.data.model.song.SongResponse
 import com.example.melobit.data.repository.ArtistRepository
 import com.example.melobit.data.repository.SongRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,11 +21,12 @@ class HomeViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val newSongsLiveData = MutableLiveData<List<Song>?>()
-    val topTenDayLiveData = MutableLiveData<List<Song>?>()
-    val topTenWeekLiveData = MutableLiveData<List<Song>?>()
-    val trendingArtistsLiveData = MutableLiveData<List<ArtistX>?>()
-    val slidersLiveData = MutableLiveData<List<Song>?>()
+    val newSongsLiveData = MutableLiveData<Resource<SongResponse>?>()
+    val topTenDayLiveData = MutableLiveData<Resource<SongResponse>?>()
+    val topTenWeekLiveData = MutableLiveData<Resource<SongResponse>?>()
+    val trendingArtistsLiveData = MutableLiveData<Resource<ArtistResponse>?>()
+    val slidersLiveData = MutableLiveData<Resource<SongResponse>?>()
+    var loadedResponseCount = MutableLiveData(0)
 
     init {
         getNewSongs()
@@ -35,42 +37,61 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getNewSongs() {
+        newSongsLiveData.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getNewSongs()
-            if (response.errorMessage == null)
-                newSongsLiveData.postValue(response.data?.results)
+            if (response.errorMessage == null) {
+                newSongsLiveData.postValue(response)
+                loadedResponseCount.postValue( loadedResponseCount.value?.plus(1))
+            }
         }
     }
 
     private fun getSliders() {
+        slidersLiveData.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getSliders()
-            if (response.errorMessage == null)
-                slidersLiveData.postValue(response.data?.results)
+            if (response.errorMessage == null) {
+                slidersLiveData.postValue(response)
+                loadedResponseCount.postValue( loadedResponseCount.value?.plus(1))
+
+            }
         }
     }
 
     private fun getTopTenDay() {
+        topTenDayLiveData.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getTopTenDaySongs()
-            if (response.errorMessage == null)
-                topTenDayLiveData.postValue(response.data?.results)
+            if (response.errorMessage == null) {
+                topTenDayLiveData.postValue(response)
+                loadedResponseCount.postValue( loadedResponseCount.value?.plus(1))
+
+            }
         }
     }
 
     private fun getTopTenWeek() {
+        topTenWeekLiveData.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             val response = songRepository.getTopTenWeekSongs()
-            if (response.errorMessage == null)
-                topTenWeekLiveData.postValue(response.data?.results)
+            if (response.errorMessage == null) {
+                topTenWeekLiveData.postValue(response)
+                loadedResponseCount.postValue( loadedResponseCount.value?.plus(1))
+
+            }
         }
     }
 
     private fun getTrendingArtists() {
+        trendingArtistsLiveData.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             val response = artistRepository.getTrendingArtists()
-            if (response.errorMessage == null)
-                trendingArtistsLiveData.postValue(response.data?.results)
+            if (response.errorMessage == null) {
+                trendingArtistsLiveData.postValue(response)
+                loadedResponseCount.postValue( loadedResponseCount.value?.plus(1))
+
+            }
         }
     }
 

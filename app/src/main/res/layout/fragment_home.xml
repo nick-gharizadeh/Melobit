@@ -10,6 +10,19 @@
         android:layout_height="wrap_content"
         tools:context=".ui.homefragment.HomeFragment">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView_loading_main"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="330dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/top_ten_week_recycler_view"
@@ -183,7 +196,15 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:listitem="so" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="textView6,textView8,textView5,textView7,textView4,textView3,trending_artists_recycler_view,textView_feature,textView,textView2,new_songs_recycler_view,top_ten_day_recycler_view,main_view_pager,top_ten_week_recycler_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

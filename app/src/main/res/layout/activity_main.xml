@@ -29,19 +29,6 @@
         app:menu="@menu/bottom_nav_menu" />
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView_loading"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_icon_splash_screen"
-        app:layout_constraintStart_toStartOf="@+id/imageView_icon_splash_screen"
-        app:layout_constraintTop_toBottomOf="@+id/textView_app_name"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading"
-        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_fragments"
@@ -80,7 +67,7 @@
         android:id="@+id/group_splash_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="animationView_loading,textView_app_name,imageView_icon_splash_screen" />
+        app:constraint_referenced_ids="textView_app_name,imageView_icon_splash_screen" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

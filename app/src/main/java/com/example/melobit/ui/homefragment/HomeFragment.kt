@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.melobit.R
+import com.example.melobit.data.model.song.Resource
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentHomeBinding
 import com.example.melobit.ui.playsongfragment.PlaySongFragment
@@ -42,23 +39,37 @@ class HomeFragment : Fragment() {
         binding.topTenWeekRecyclerView.adapter = adapterTopTenWeekSongs
         binding.trendingArtistsRecyclerView.adapter = adapterTrendingArtist
 
+        homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
+            if (it == 5) {
+                binding.groupLayout.visibility = View.VISIBLE
+                binding.animationViewLoadingMain.visibility = View.INVISIBLE
+            }
+
+        }
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it !is Resource.Loading) {
+                adapter.submitList(it?.data?.results)
+            }
         }
         homeViewModel.trendingArtistsLiveData.observe(viewLifecycleOwner) {
-            adapterTrendingArtist.submitList(it)
+            if (it !is Resource.Loading) {
+                adapterTrendingArtist.submitList(it?.data?.results)
+            }
         }
         homeViewModel.topTenDayLiveData.observe(viewLifecycleOwner) {
-            adapterTopTenDaySongs.submitList(it)
+            if (it !is Resource.Loading || it.data?.results?.size == 0) {
+                adapterTopTenDaySongs.submitList(it?.data?.results)
+            }
         }
         homeViewModel.topTenWeekLiveData.observe(viewLifecycleOwner) {
-            adapterTopTenWeekSongs.submitList(it)
+            if (it !is Resource.Loading) {
+                adapterTopTenWeekSongs.submitList(it?.data?.results)
+            }
         }
         homeViewModel.slidersLiveData.observe(viewLifecycleOwner) {
-
-            if (it != null) {
+            if (it !is Resource.Loading) {
                 val mViewPagerAdapter =
-                    MainViewPagerAdapter(requireContext(), it)
+                    it?.data?.results?.let { it1 -> MainViewPagerAdapter(requireContext(), it1) }
                 binding.mainViewPager.adapter = mViewPagerAdapter
 //
 //                val timerTask: TimerTask = object : TimerTask() {
