@@ -7,6 +7,18 @@
     tools:context=".ui.playsongfragment.PlaySongFragment">
 
     <ImageView
+        android:alpha="0.2"
+        android:id="@+id/imageView_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
         android:id="@+id/imageView_play_song_cover"
         android:layout_width="0dp"
         android:layout_height="300dp"

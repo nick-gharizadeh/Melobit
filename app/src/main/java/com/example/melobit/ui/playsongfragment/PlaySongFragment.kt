@@ -40,17 +40,19 @@ class PlaySongFragment : Fragment() {
         song?.audio?.medium?.url?.let { playSongViewModel.playMusic(it) }
         binding.textViewPlaySongArtist.text = song?.artists?.get(0)?.fullName
         binding.textViewPlaySongTitle.text = song?.title
+        Glide.with(requireContext()).load(song?.image?.cover?.url)
+            .transform(GlideBlurTransformation(context)).into(binding.imageViewBackground)
         Glide.with(requireContext())
             .load(song?.image?.cover?.url)
             .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(binding.imageViewPlaySongCover)
         binding.seekBar.max = song?.duration!!
-            timer.scheduleAtFixedRate(object : TimerTask() {
-                override fun run() {
-                    binding.seekBar.progress = playSongViewModel.mMediaPlayer.currentPosition / 1000
-                }
-            }, 0, 1000)
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                binding.seekBar.progress = playSongViewModel.mMediaPlayer.currentPosition / 1000
+            }
+        }, 0, 1000)
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
 
         binding.imageViewPause.setOnClickListener {
