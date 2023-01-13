@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ui.playsongfragment.PlaySongFragment">
 
     <ImageView
@@ -22,19 +22,17 @@
         android:id="@+id/imageView_pause"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="64dp"
         android:src="@drawable/pause_ic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_play_song_artist" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_play"
         android:layout_width="50dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:backgroundTintMode="add"
         android:src="@drawable/play_ic"
         android:visibility="gone"
@@ -62,5 +60,14 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/textView_play_song_title"
         app:layout_constraintTop_toBottomOf="@+id/textView_play_song_title" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_pause"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_play_song_cover"
+        app:layout_constraintStart_toStartOf="@+id/imageView_play_song_cover"
+        app:layout_constraintTop_toBottomOf="@+id/textView_play_song_artist" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
