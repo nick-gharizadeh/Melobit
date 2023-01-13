@@ -1,5 +1,6 @@
 package com.example.melobit.ui.homefragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.example.melobit.data.model.song.Resource
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentHomeBinding
-import com.example.melobit.ui.playsongfragment.PlaySongFragment
+import com.example.melobit.ui.PlaySongActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -40,10 +41,12 @@ class HomeFragment : Fragment() {
         binding.trendingArtistsRecyclerView.adapter = adapterTrendingArtist
 
         homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
-            if (it == 5) {
+            //TODO: uncomment
+//            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+//            if (it >= 4) {
                 binding.groupLayout.visibility = View.VISIBLE
                 binding.animationViewLoadingMain.visibility = View.INVISIBLE
-            }
+//            }
 
         }
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner) {
@@ -71,7 +74,7 @@ class HomeFragment : Fragment() {
                 val mViewPagerAdapter =
                     it?.data?.results?.let { it1 -> MainViewPagerAdapter(requireContext(), it1) }
                 binding.mainViewPager.adapter = mViewPagerAdapter
-//
+                //TODO: uncomment
 //                val timerTask: TimerTask = object : TimerTask() {
 //                    override fun run() {
 //                        binding.mainViewPager.post {
@@ -87,9 +90,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun goToPlaySongFragment(song: Song) {
-        val dialogFragment = PlaySongFragment(song)
-        activity?.let {
-            dialogFragment.show(it.supportFragmentManager, "My  Fragment")
-        }
+        val intent = Intent(requireActivity(), PlaySongActivity::class.java)
+        intent.putExtra("song", song)
+        startActivity(intent)
     }
 }

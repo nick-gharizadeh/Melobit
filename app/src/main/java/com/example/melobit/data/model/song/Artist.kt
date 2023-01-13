@@ -1,5 +1,7 @@
 package com.example.melobit.data.model.song
 
+import java.io.Serializable
+
 data class Artist(
     val followersCount: Int,
     val fullName: String,
@@ -7,4 +9,4 @@ data class Artist(
     val image: Image,
     val sumSongsDownloadsCount: String,
     val type: String
-)
+): Serializable
