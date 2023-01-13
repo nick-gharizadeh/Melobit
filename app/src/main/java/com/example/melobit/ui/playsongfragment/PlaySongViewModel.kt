@@ -62,8 +62,5 @@ class PlaySongViewModel : ViewModel() {
         mMediaPlayer.reset()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        stopPlaying()
-    }
+
 }

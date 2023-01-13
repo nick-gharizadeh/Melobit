@@ -18,7 +18,7 @@ import com.example.melobit.databinding.HorizontalSongItemBinding
 
 typealias ClickHandlerSongSearch = (Song) -> Unit
 
-class HorizontalSongItemAdapter() :
+class HorizontalSongItemAdapter(var clickHandlerSongSearch: ClickHandlerSongSearch) :
     ListAdapter<Song, HorizontalSongItemAdapter.ItemHolder>(SongDiffCallback) {
 
     object SongDiffCallback : DiffUtil.ItemCallback<Song>() {
@@ -62,9 +62,9 @@ class HorizontalSongItemAdapter() :
         val song = getItem(position)
         holder.binding.song = song
         holder.bind(song)
-//        holder.binding.constraintLayout.setOnClickListener {
-//            clickHandlerSong.invoke(song)
-//        }
+        holder.binding.constraintLayout.setOnClickListener {
+            clickHandlerSongSearch.invoke(song)
+        }
 
     }
 }

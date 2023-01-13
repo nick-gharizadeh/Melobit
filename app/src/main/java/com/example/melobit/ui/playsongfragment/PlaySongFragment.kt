@@ -19,8 +19,9 @@ import java.util.*
 
 @AndroidEntryPoint
 
-class PlaySongFragment() : Fragment() {
+class PlaySongFragment : Fragment() {
     var song: Song? = null
+    val timer = Timer()
     private lateinit var binding: FragmentPlaySongBinding
     val playSongViewModel: PlaySongViewModel by viewModels()
 
@@ -45,13 +46,11 @@ class PlaySongFragment() : Fragment() {
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(binding.imageViewPlaySongCover)
         binding.seekBar.max = song?.duration!!
-        val timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                binding.seekBar.progress = playSongViewModel.mMediaPlayer.currentPosition/1000
-            }
-        }, 0, 1000)
-
+            timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    binding.seekBar.progress = playSongViewModel.mMediaPlayer.currentPosition / 1000
+                }
+            }, 0, 1000)
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
 
         binding.imageViewPause.setOnClickListener {
@@ -78,7 +77,14 @@ class PlaySongFragment() : Fragment() {
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {}
         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
+        playSongViewModel.stopPlaying()
+    }
 }
