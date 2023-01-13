@@ -30,6 +30,7 @@ class PlaySongViewModel : ViewModel() {
                         .build()
                 )
                 mMediaPlayer.setDataSource(url)
+                mMediaPlayer.isLooping = true
                 mMediaPlayer.prepare()
                 mMediaPlayer.start()
             } catch (e: Exception) {
