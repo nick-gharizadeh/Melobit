@@ -8,5 +8,18 @@
         android:id="@+id/playSongFragment"
         android:name="com.example.melobit.ui.playsongfragment.PlaySongFragment"
         android:label="fragment_play_song"
-        tools:layout="@layout/fragment_play_song" />
+        tools:layout="@layout/fragment_play_song" >
+        <action
+            android:id="@+id/action_playSongFragment_to_lyricsFragment"
+            app:destination="@id/lyricsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lyricsFragment"
+        android:name="com.example.melobit.ui.lyricsfragment.LyricsFragment"
+        android:label="fragment_lyrics"
+        tools:layout="@layout/fragment_lyrics" >
+        <argument
+            android:name="songItem"
+            app:argType="com.example.melobit.data.model.song.Song" />
+    </fragment>
 </navigation>

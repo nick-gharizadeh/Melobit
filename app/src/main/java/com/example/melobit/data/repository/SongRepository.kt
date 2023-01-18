@@ -1,6 +1,7 @@
 package com.example.melobit.data.repository
 
 import com.example.melobit.data.model.song.Resource
+import com.example.melobit.data.model.song.Song
 import com.example.melobit.data.model.song.SongResponse
 import com.example.melobit.network.MelobitApiService
 import javax.inject.Inject
@@ -22,5 +23,9 @@ class SongRepository @Inject constructor(private val songApiService: MelobitApiS
 
     suspend fun getTopTenWeekSongs(): Resource<SongResponse> {
         return safeApiCall { songApiService.getTopTenWeekSongs() }
+    }
+
+    suspend fun getSongById(songId:String): Resource<Song> {
+        return safeApiCall { songApiService.getSongById(songId) }
     }
 }

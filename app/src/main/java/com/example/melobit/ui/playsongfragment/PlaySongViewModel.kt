@@ -2,16 +2,25 @@ package com.example.melobit.ui.playsongfragment
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.melobit.data.model.song.Resource
+import com.example.melobit.data.model.song.Song
+import com.example.melobit.data.repository.SongRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class PlaySongViewModel : ViewModel() {
+@HiltViewModel
+class PlaySongViewModel @Inject constructor(
+    private val songRepository: SongRepository
+) : ViewModel() {
     var mMediaPlayer: MediaPlayer = MediaPlayer()
     var isPaused = false
     var timeThatPaused = 0
+    val songDetails = MutableLiveData<Song?>()
 
     fun playMusic(url: String) {
         makeMediaPlayerReadyForPlaying(url)
@@ -56,12 +65,20 @@ class PlaySongViewModel : ViewModel() {
     }
 
 
-
     fun stopPlaying() {
         isPaused = false
         mMediaPlayer.stop()
         mMediaPlayer.reset()
     }
 
+
+     fun getSongById(songId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = songRepository.getSongById(songId)
+            if (response.errorMessage == null) {
+                songDetails.postValue(response.data)
+            }
+        }
+    }
 
 }

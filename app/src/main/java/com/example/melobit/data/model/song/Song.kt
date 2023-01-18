@@ -10,5 +10,6 @@ data class Song(
     val duration: Int?,
     val id: String,
     val image: ImageXXX?,
-    val title: String?
+    val title: String?,
+    val lyrics: String?
 ) : Serializable

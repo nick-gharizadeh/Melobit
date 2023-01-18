@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -18,7 +19,6 @@ import java.util.*
 
 
 @AndroidEntryPoint
-
 class PlaySongFragment : Fragment() {
     var song: Song? = null
     val timer = Timer()
@@ -38,6 +38,7 @@ class PlaySongFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         song = activity?.intent?.extras!!.getSerializable("song") as Song
         song?.audio?.medium?.url?.let { playSongViewModel.playMusic(it) }
+        playSongViewModel.getSongById(song!!.id)
         binding.textViewPlaySongArtist.text = song?.artists?.get(0)?.fullName
         binding.textViewPlaySongTitle.text = song?.title
         Glide.with(requireContext()).load(song?.image?.cover?.url)
@@ -54,6 +55,21 @@ class PlaySongFragment : Fragment() {
             }
         }, 0, 1000)
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
+
+
+        playSongViewModel.songDetails.observe(viewLifecycleOwner) {
+            if (!it?.lyrics.isNullOrEmpty())
+                binding.textViewLyrics.visibility = View.VISIBLE
+        }
+
+        binding.textViewLyrics.setOnClickListener {
+            val songItem = playSongViewModel.songDetails.value
+            if (songItem != null) {
+                val action =
+                    PlaySongFragmentDirections.actionPlaySongFragmentToLyricsFragment(songItem)
+                findNavController().navigate(action)
+            }
+        }
 
         binding.imageViewPause.setOnClickListener {
             it.visibility = View.INVISIBLE
