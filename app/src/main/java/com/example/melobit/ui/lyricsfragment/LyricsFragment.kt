@@ -1,22 +1,29 @@
 package com.example.melobit.ui.lyricsfragment
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
+import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentLyricsBinding
 
-class LyricsFragment : Fragment() {
+
+class LyricsFragment(val song: Song) : DialogFragment() {
 
     private lateinit var binding: FragmentLyricsBinding
-    private val args: LyricsFragmentArgs by navArgs()
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +35,6 @@ class LyricsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val song = args.songItem
         Glide.with(requireContext())
             .load(song.image?.cover?.url)
             .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
@@ -39,4 +45,6 @@ class LyricsFragment : Fragment() {
         binding.textViewLyricsText.text = song.lyrics.toString()
 
     }
+
+
 }

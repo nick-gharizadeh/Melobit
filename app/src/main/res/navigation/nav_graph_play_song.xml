@@ -8,11 +8,7 @@
         android:id="@+id/playSongFragment"
         android:name="com.example.melobit.ui.playsongfragment.PlaySongFragment"
         android:label="fragment_play_song"
-        tools:layout="@layout/fragment_play_song" >
-        <action
-            android:id="@+id/action_playSongFragment_to_lyricsFragment"
-            app:destination="@id/lyricsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_play_song" />
     <fragment
         android:id="@+id/lyricsFragment"
         android:name="com.example.melobit.ui.lyricsfragment.LyricsFragment"
