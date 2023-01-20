@@ -69,11 +69,8 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
-            if (it >= 2) {
                 binding.groupLayout.visibility = View.VISIBLE
                 binding.animationViewLoadingMain.visibility = View.GONE
-            }
-
         }
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner) {
             if (it !is Resource.Loading) {
