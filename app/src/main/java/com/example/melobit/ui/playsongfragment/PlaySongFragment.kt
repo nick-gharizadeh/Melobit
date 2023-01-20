@@ -56,7 +56,12 @@ class PlaySongFragment : Fragment() {
             }
         }, 0, 1000)
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
-
+        binding.imageViewBackward.setOnClickListener {
+            SongPlayer.seekTenSecondsBackward()
+        }
+        binding.imageViewForward.setOnClickListener {
+            SongPlayer.seekTenSecondsForward()
+        }
         playSongViewModel.songDetails.observe(viewLifecycleOwner) {
             if (!it?.lyrics.isNullOrEmpty())
                 binding.textViewLyrics.visibility = View.VISIBLE

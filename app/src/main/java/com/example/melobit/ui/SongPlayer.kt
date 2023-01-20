@@ -63,6 +63,15 @@ object SongPlayer {
         return false
     }
 
+    fun seekTenSecondsForward() {
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition + 10000)
+
+    }
+
+    fun seekTenSecondsBackward() {
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition - 10000)
+
+    }
 
     fun stopPlaying() {
         isPaused = false
