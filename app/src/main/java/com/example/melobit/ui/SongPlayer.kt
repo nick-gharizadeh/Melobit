@@ -1,4 +1,4 @@
-package com.example.melobit
+package com.example.melobit.ui
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer

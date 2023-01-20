@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.melobit.SongPlayer
+import com.example.melobit.ui.SongPlayer
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentPlaySongBinding
 import com.example.melobit.ui.lyricsfragment.LyricsFragment
