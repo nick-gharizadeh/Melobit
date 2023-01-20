@@ -5,21 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.melobit.data.model.song.Resource
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentHomeBinding
 import com.example.melobit.ui.PlaySongActivity
+import com.example.melobit.ui.SongPlayer
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-    private var timer: Timer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +42,31 @@ class HomeFragment : Fragment() {
         binding.topTenWeekRecyclerView.adapter = adapterTopTenWeekSongs
         binding.trendingArtistsRecyclerView.adapter = adapterTrendingArtist
 
+        SongPlayer.songPlayed.observe(viewLifecycleOwner) {
+            if (it == true) {
+                binding.cardView.visibility = View.VISIBLE
+                binding.textViewNowPlayingSongTitle.text = SongPlayer.song?.title.toString()
+                binding.textViewNowPlayingSongArtist.text =
+                    SongPlayer.song?.artists?.get(0)?.fullName
+
+                Glide.with(requireContext())
+                    .load(SongPlayer.song?.image?.cover?.url)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .into(binding.imageViewNowPlayingCover)
+
+            } else {
+                binding.cardView.visibility = View.GONE
+
+            }
+        }
+
         homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
             //TODO: uncomment
 //            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
 //            if (it >= 4) {
-                binding.groupLayout.visibility = View.VISIBLE
-                binding.animationViewLoadingMain.visibility = View.INVISIBLE
+            binding.groupLayout.visibility = View.VISIBLE
+            binding.animationViewLoadingMain.visibility = View.INVISIBLE
 //            }
 
         }
@@ -87,6 +108,8 @@ class HomeFragment : Fragment() {
 //                timer!!.schedule(timerTask, 5000, 5000)
             }
         }
+
+
     }
 
     private fun goToPlaySongFragment(song: Song) {

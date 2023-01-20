@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.melobit.ui.SongPlayer
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentPlaySongBinding
+import com.example.melobit.ui.SongPlayer
 import com.example.melobit.ui.lyricsfragment.LyricsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -38,7 +38,7 @@ class PlaySongFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         song = activity?.intent?.extras!!.getSerializable("song") as Song
-        song?.audio?.medium?.url?.let { SongPlayer.playMusic(it) }
+        SongPlayer.playMusic(song!!)
         playSongViewModel.getSongById(song!!.id)
         binding.textViewPlaySongArtist.text = song?.artists?.get(0)?.fullName
         binding.textViewPlaySongTitle.text = song?.title

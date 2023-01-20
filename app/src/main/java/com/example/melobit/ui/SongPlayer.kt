@@ -2,6 +2,8 @@ package com.example.melobit.ui
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import androidx.lifecycle.MutableLiveData
+import com.example.melobit.data.model.song.Song
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -11,10 +13,13 @@ object SongPlayer {
     var mMediaPlayer: MediaPlayer = MediaPlayer()
     var isPaused = false
     var timeThatPaused = 0
+    var songPlayed = MutableLiveData(false)
+    var song: Song? = null
 
 
-    fun playMusic(url: String) {
-        makeMediaPlayerReadyForPlaying(url)
+    fun playMusic(song: Song) {
+        this.song = song
+        song.audio?.medium?.url?.let { makeMediaPlayerReadyForPlaying(it) }
     }
 
 
@@ -22,6 +27,7 @@ object SongPlayer {
     fun makeMediaPlayerReadyForPlaying(url: String) {
         GlobalScope.launch(Dispatchers.IO) {
             stopPlaying()
+            songPlayed.postValue(true)
             try {
                 mMediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder()
@@ -57,6 +63,7 @@ object SongPlayer {
 
     fun stopPlaying() {
         isPaused = false
+        songPlayed.postValue(false)
         mMediaPlayer.stop()
         mMediaPlayer.reset()
     }
