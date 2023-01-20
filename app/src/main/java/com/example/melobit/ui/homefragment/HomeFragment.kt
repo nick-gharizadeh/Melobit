@@ -24,7 +24,6 @@ import java.util.*
 class HomeFragment : Fragment() {
     val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-    var timer: Timer? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,7 +69,6 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
             if (it >= 2) {
                 binding.groupLayout.visibility = View.VISIBLE
                 binding.animationViewLoadingMain.visibility = View.GONE
@@ -100,22 +98,15 @@ class HomeFragment : Fragment() {
         homeViewModel.slidersLiveData.observe(viewLifecycleOwner) {
             if (it !is Resource.Loading) {
                 val mViewPagerAdapter =
-                    it?.data?.results?.let { it1 -> MainViewPagerAdapter(requireContext(), it1) }
-                binding.mainViewPager.adapter = mViewPagerAdapter
-                val timerTask: TimerTask = object : TimerTask() {
-                    override fun run() {
-                        binding.mainViewPager.post {
-                            binding.mainViewPager.currentItem =
-                                (binding.mainViewPager.currentItem + 1) % it?.data?.results?.size!!
-                        }
+                    it?.data?.results?.let { it1 ->
+                        MainViewPagerAdapter(
+                            requireContext(),
+                            it1
+                        )
                     }
-                }
-                timer = Timer()
-                timer!!.schedule(timerTask, 5000, 5000)
+                binding.mainViewPager.adapter = mViewPagerAdapter
             }
         }
-
-
     }
 
     private fun goToPlaySongFragment(song: Song) {
