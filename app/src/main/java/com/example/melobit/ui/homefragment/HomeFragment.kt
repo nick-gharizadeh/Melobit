@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -17,12 +18,13 @@ import com.example.melobit.databinding.FragmentHomeBinding
 import com.example.melobit.ui.PlaySongActivity
 import com.example.melobit.ui.SongPlayer
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-
+    var timer: Timer? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,12 +70,11 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.loadedResponseCount.observe(viewLifecycleOwner) {
-            //TODO: uncomment
-//            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-//            if (it >= 4) {
-            binding.groupLayout.visibility = View.VISIBLE
-            binding.animationViewLoadingMain.visibility = View.INVISIBLE
-//            }
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+            if (it >= 2) {
+                binding.groupLayout.visibility = View.VISIBLE
+                binding.animationViewLoadingMain.visibility = View.GONE
+            }
 
         }
         homeViewModel.newSongsLiveData.observe(viewLifecycleOwner) {
@@ -101,17 +102,16 @@ class HomeFragment : Fragment() {
                 val mViewPagerAdapter =
                     it?.data?.results?.let { it1 -> MainViewPagerAdapter(requireContext(), it1) }
                 binding.mainViewPager.adapter = mViewPagerAdapter
-                //TODO: uncomment
-//                val timerTask: TimerTask = object : TimerTask() {
-//                    override fun run() {
-//                        binding.mainViewPager.post {
-//                            binding.mainViewPager.currentItem =
-//                                (binding.mainViewPager.currentItem + 1) % it.size
-//                        }
-//                    }
-//                }
-//                timer = Timer()
-//                timer!!.schedule(timerTask, 5000, 5000)
+                val timerTask: TimerTask = object : TimerTask() {
+                    override fun run() {
+                        binding.mainViewPager.post {
+                            binding.mainViewPager.currentItem =
+                                (binding.mainViewPager.currentItem + 1) % it?.data?.results?.size!!
+                        }
+                    }
+                }
+                timer = Timer()
+                timer!!.schedule(timerTask, 5000, 5000)
             }
         }
 
