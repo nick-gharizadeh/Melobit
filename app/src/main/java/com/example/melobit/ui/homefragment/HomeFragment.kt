@@ -42,9 +42,15 @@ class HomeFragment : Fragment() {
         binding.topTenWeekRecyclerView.adapter = adapterTopTenWeekSongs
         binding.trendingArtistsRecyclerView.adapter = adapterTrendingArtist
 
+        binding.cardViewNowPlaying.setOnClickListener {
+            val intent = Intent(requireActivity(), PlaySongActivity::class.java)
+            intent.putExtra("song", SongPlayer.song)
+            startActivity(intent)
+        }
+
         SongPlayer.songPlayed.observe(viewLifecycleOwner) {
             if (it == true) {
-                binding.cardView.visibility = View.VISIBLE
+                binding.cardViewNowPlaying.visibility = View.VISIBLE
                 binding.textViewNowPlayingSongTitle.text = SongPlayer.song?.title.toString()
                 binding.textViewNowPlayingSongArtist.text =
                     SongPlayer.song?.artists?.get(0)?.fullName
@@ -56,7 +62,7 @@ class HomeFragment : Fragment() {
                     .into(binding.imageViewNowPlayingCover)
 
             } else {
-                binding.cardView.visibility = View.GONE
+                binding.cardViewNowPlaying.visibility = View.GONE
 
             }
         }

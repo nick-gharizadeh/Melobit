@@ -18,8 +18,11 @@ object SongPlayer {
 
 
     fun playMusic(song: Song) {
-        this.song = song
-        song.audio?.medium?.url?.let { makeMediaPlayerReadyForPlaying(it) }
+        // is it a new song to playing or is it the last one?
+        if (this.song?.title != song.title) {
+            this.song = song
+            song.audio?.medium?.url?.let { makeMediaPlayerReadyForPlaying(it) }
+        }
     }
 
 
