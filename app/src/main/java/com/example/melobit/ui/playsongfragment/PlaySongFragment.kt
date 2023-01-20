@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentPlaySongBinding
+import com.example.melobit.ui.downloadfragment.DownloadDialogFragment
 import com.example.melobit.ui.SongPlayer
 import com.example.melobit.ui.lyricsfragment.LyricsFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +73,17 @@ class PlaySongFragment : Fragment() {
             if (songItem != null) {
                 val dialogFragment = LyricsFragment(songItem)
                 activity?.let {
-                    dialogFragment.show(it.supportFragmentManager, "My  Fragment")
+                    dialogFragment.show(it.supportFragmentManager, "Lyrics  Fragment")
+                }
+            }
+        }
+
+        binding.imageViewDownload.setOnClickListener {
+            val songItem = playSongViewModel.songDetails.value
+            if (songItem != null) {
+                val dialogFragment = DownloadDialogFragment(songItem)
+                activity?.let {
+                    dialogFragment.show(it.supportFragmentManager, "Download  Fragment")
                 }
             }
         }
