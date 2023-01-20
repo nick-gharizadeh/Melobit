@@ -2,7 +2,6 @@ package com.example.melobit.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.melobit.R
@@ -10,14 +9,11 @@ import com.example.melobit.databinding.ActivityMainBinding
 import com.example.melobit.ui.homefragment.HomeFragment
 import com.example.melobit.ui.searchfragment.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.fragment.app.activityViewModels
-
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val baseViewModel: BaseViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

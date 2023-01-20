@@ -1,18 +1,16 @@
-package com.example.melobit.ui
+package com.example.melobit
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
-class BaseViewModel : ViewModel() {
+object SongPlayer {
     var mMediaPlayer: MediaPlayer = MediaPlayer()
     var isPaused = false
     var timeThatPaused = 0
-
 
 
     fun playMusic(url: String) {
@@ -20,11 +18,10 @@ class BaseViewModel : ViewModel() {
     }
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun makeMediaPlayerReadyForPlaying(url: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (mMediaPlayer.isPlaying or isPaused) {
-                stopPlaying()
-            }
+        GlobalScope.launch(Dispatchers.IO) {
+            stopPlaying()
             try {
                 mMediaPlayer.setAudioAttributes(
                     AudioAttributes.Builder()
@@ -63,7 +60,6 @@ class BaseViewModel : ViewModel() {
         mMediaPlayer.stop()
         mMediaPlayer.reset()
     }
-
 
 
 }

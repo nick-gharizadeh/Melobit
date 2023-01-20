@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.melobit.SongPlayer
 import com.example.melobit.data.model.song.Song
 import com.example.melobit.databinding.FragmentPlaySongBinding
-import com.example.melobit.ui.BaseViewModel
 import com.example.melobit.ui.lyricsfragment.LyricsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -27,7 +25,6 @@ class PlaySongFragment : Fragment() {
     val timer = Timer()
     private lateinit var binding: FragmentPlaySongBinding
     val playSongViewModel: PlaySongViewModel by viewModels()
-    val baseViewModel: BaseViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -41,7 +38,7 @@ class PlaySongFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         song = activity?.intent?.extras!!.getSerializable("song") as Song
-        song?.audio?.medium?.url?.let { baseViewModel.playMusic(it) }
+        song?.audio?.medium?.url?.let { SongPlayer.playMusic(it) }
         playSongViewModel.getSongById(song!!.id)
         binding.textViewPlaySongArtist.text = song?.artists?.get(0)?.fullName
         binding.textViewPlaySongTitle.text = song?.title
@@ -55,11 +52,10 @@ class PlaySongFragment : Fragment() {
         binding.seekBar.max = song?.duration!!
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                binding.seekBar.progress = baseViewModel.mMediaPlayer.currentPosition / 1000
+                binding.seekBar.progress = SongPlayer.mMediaPlayer.currentPosition / 1000
             }
         }, 0, 1000)
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
-
 
         playSongViewModel.songDetails.observe(viewLifecycleOwner) {
             if (!it?.lyrics.isNullOrEmpty())
@@ -79,13 +75,13 @@ class PlaySongFragment : Fragment() {
         binding.imageViewPause.setOnClickListener {
             it.visibility = View.INVISIBLE
             binding.imageViewPlay.visibility = View.VISIBLE
-            baseViewModel.pausePlaying()
+            SongPlayer.pausePlaying()
         }
 
         binding.imageViewPlay.setOnClickListener {
             it.visibility = View.INVISIBLE
             binding.imageViewPause.visibility = View.VISIBLE
-            baseViewModel.startPlaying()
+            SongPlayer.startPlaying()
 
         }
     }
@@ -94,7 +90,7 @@ class PlaySongFragment : Fragment() {
     val seekBarListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             if (fromUser) {
-                baseViewModel.mMediaPlayer.seekTo(progress * 1000)
+                SongPlayer.mMediaPlayer.seekTo(progress * 1000)
             }
         }
 
